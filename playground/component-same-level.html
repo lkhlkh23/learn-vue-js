@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>component-same-level</title>
+</head>
+<body>
+    <div id="app">
+        {{str}}
+        <app-header v-bind:propsdata="num"> </app-header>
+        <app-content v-on:pass="deliverNum"></app-content>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        /*
+            같은 컴포넌트 간의 데이터를 전송할 때, 다이렉트로 전달할 수 있는 방법은 없다.
+            하위 컴퓨넌트에서 상위 컴포넌트로 event를 통해 전달하고
+            상위 컴포넌트에서 하위 컴포넌트로 props로 전달해야 한다!
+        */
+        var appHeader = {
+            template: '<h1> header </h1>',
+            props: ['propsdata']
+        };
+        var appContent = {
+            template: '<button v-on:click="passNum"> pass </button>',
+            methods: {
+                passNum: function () {
+                    this.$emit('pass', 10);
+                }
+            }
+        };
+
+        new Vue({
+            el: '#app',
+            components: {
+                'app-header': appHeader,
+                'app-content': appContent
+            },
+            methods: {
+                deliverNum: function (value) {
+                    this.num = value;
+                }
+            },
+            data: {
+                str: 'hi',
+                num: 0
+            }
+        });
+    </script>
+</body>
+</html>
