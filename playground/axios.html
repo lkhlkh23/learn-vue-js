@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>axios</title>
+</head>
+<body>
+    <!--
+        엑시오스
+            뷰에서 권고하는 HTTP 통신 라이브러리
+            Promise 기반의 HTTP 통신 라이브러리이며, 상대적으로 다른 HTTP통신 라이브러리들에 비해 문서화가 잘되있으며 API가 다양함!
+                - promise : 자바스크립트의 비동기 처리 패턴
+                    callback -> promise -> promise + generator -> async & await
+
+            참고 : https://github.com/axios/axios
+    -->
+    <div id="app">
+        <button v-on:click="getData">get user</button>
+        <div>
+            {{ users }}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                users: []
+            },
+            methods: {
+                getData: function() {
+                    var vm = this;
+                    axios.get('https://jsonplaceholder.typicode.com/users/')
+                        .then(function(response) {
+                            console.log(response.data);
+                            vm.users = response.data;
+                        })
+                        .catch(function(error) {
+                            console.log(error);
+                        });
+                }
+            }
+        });
+    </script>
+</body>
+</html>
