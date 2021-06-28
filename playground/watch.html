@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>watch</title>
+</head>
+<body>
+<div id="app">
+    <button v-on:click="increase"> increase </button>
+    <p> {{num}} </p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            num: 10
+        },
+        methods: {
+            increase: function () {
+                this.num += 1;
+            },
+            logText: function () {
+                console.log('changed');
+            }
+        },
+        watch: {
+            // 데이터의 변화에 따라 특정 로직을 실행시키는 것이 가능!
+            num: function () {
+                this.logText();
+            }
+        }
+    });
+</script>
+</body>
+</html>
